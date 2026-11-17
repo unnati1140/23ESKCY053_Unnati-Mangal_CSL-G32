@@ -1,0 +1,19 @@
+Flood threshold study for rule R4 (window 10 s)
+  S1 = normal traffic, S3 = 50 forged gratuitous ARPs in 5 s
+------------------------------------------------------------------------------
+ Threshold   False alarms on S1   Flood detected   At forged ARP   Delay
+------------------------------------------------------------------------------
+ 2           4                    yes              no. 2           0.1 s
+ 3           0                    yes              no. 3           0.2 s
+ 4           0                    yes              no. 4           0.3 s
+ 5 *         0                    yes              no. 5           0.4 s
+ 8           0                    yes              no. 8           0.7 s
+ 10          0                    yes              no. 10          0.9 s
+ 20          0                    yes              no. 20          1.9 s
+ 30          0                    yes              no. 30          2.9 s
+ 50          0                    yes              no. 50          4.9 s
+ 60          0                    NO (missed)      -               -
+------------------------------------------------------------------------------
+ * = default value used by the detector
+
+Saved results/threshold_study.csv

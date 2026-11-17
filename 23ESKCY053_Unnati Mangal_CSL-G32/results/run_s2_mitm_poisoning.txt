@@ -1,0 +1,58 @@
+==============================================================================================
+ ARP Spoofing Detector v1.0  |  Mini Project CSL-032  |  Unnati Mangal (23ESKCY053)
+==============================================================================================
+ Source  : pcap file samples/s2_mitm_poisoning.pcap
+ Rules   : flood >= 5 gratuitous ARPs in 10 s | TTL 300 s | multi-IP >= 3 | cooldown 30 s
+ Trusted : none (bindings are learnt from the traffic)
+----------------------------------------------------------------------------------------------
+[+000.000s] new host   192.168.56.1    is at 02:aa:00:00:00:01
+[+005.100s] new host   192.168.56.10   is at 02:aa:00:00:00:10
+[+010.250s] new host   192.168.56.11   is at 02:aa:00:00:00:11
+[+012.900s] new host   192.168.56.20   is at 02:aa:00:00:00:20
+[+017.800s] new host   192.168.56.100  is at 02:aa:00:00:01:00
+[+020.300s] new host   192.168.56.66   is at 02:bb:00:00:00:66
+[+024.000s] ALERT #1   HIGH     R1  IP-MAC CONFLICT  (frame 23)
+            192.168.56.1 moved from 02:aa:00:00:00:01 to 02:bb:00:00:00:66
+[+024.000s] ALERT #2   LOW      R7  UNSOLICITED REPLY  (frame 23)
+            unrequested reply '192.168.56.1 is at 02:bb:00:00:00:66' sent to 192.168.56.10
+[+024.001s] ALERT #3   HIGH     R1  IP-MAC CONFLICT  (frame 24)
+            192.168.56.10 moved from 02:aa:00:00:00:10 to 02:bb:00:00:00:66
+[+024.001s] ALERT #4   MEDIUM   R5  MAC CLAIMS MANY IPs  (frame 24)
+            02:bb:00:00:00:66 claims 3 IP addresses: 192.168.56.1, 192.168.56.10,
+            192.168.56.66
+[+024.001s] ALERT #5   LOW      R7  UNSOLICITED REPLY  (frame 24)
+            unrequested reply '192.168.56.10 is at 02:bb:00:00:00:66' sent to 192.168.56.1
+[+033.500s] ALERT #6   CRITICAL R2  BINDING FLIP-FLOP  (frame 36)
+            192.168.56.1 flips between 02:bb:00:00:00:66 and 02:aa:00:00:00:01 (2 changes)
+[+041.200s] ALERT #7   CRITICAL R2  BINDING FLIP-FLOP  (frame 46)
+            192.168.56.10 flips between 02:bb:00:00:00:66 and 02:aa:00:00:00:10 (2 changes)
+----------------------------------------------------------------------------------------------
+SUMMARY
+  Frames read    : 60 (56 of them ARP)
+  ARP packets    : 56 = 16 requests + 40 replies (3 gratuitous, 3 probes)
+  Hosts in table : 6
+  Alerts         : 7 shown (CRITICAL 2, HIGH 2, MEDIUM 1, LOW 2), 60 repeats suppressed
+
+IP-MAC TABLE
+  +----------------+-------------------+---------+---------+---------------------+
+  | IP address     | MAC address       | Packets | Changes | Remark              |
+  +----------------+-------------------+---------+---------+---------------------+
+  | 192.168.56.1   | 02:bb:00:00:00:66 | 22      | 3       | CHANGED 3x - verify |
+  | 192.168.56.10  | 02:bb:00:00:00:66 | 22      | 5       | CHANGED 5x - verify |
+  | 192.168.56.11  | 02:aa:00:00:00:11 | 2       | 0       |                     |
+  | 192.168.56.20  | 02:aa:00:00:00:20 | 4       | 0       |                     |
+  | 192.168.56.66  | 02:bb:00:00:00:66 | 2       | 0       |                     |
+  | 192.168.56.100 | 02:aa:00:00:01:00 | 1       | 0       |                     |
+  +----------------+-------------------+---------+---------+---------------------+
+
+ALERTS BY RULE
+  +------+---------------------+----------+-------+------------+
+  | Rule | Name                | Severity | Shown | Suppressed |
+  +------+---------------------+----------+-------+------------+
+  | R1   | IP-MAC CONFLICT     | HIGH     | 2     | 0          |
+  | R2   | BINDING FLIP-FLOP   | CRITICAL | 2     | 4          |
+  | R5   | MAC CLAIMS MANY IPs | MEDIUM   | 1     | 28         |
+  | R7   | UNSOLICITED REPLY   | LOW      | 2     | 28         |
+  +------+---------------------+----------+-------+------------+
+
+RESULT: suspicious ARP activity detected (highest severity: CRITICAL)

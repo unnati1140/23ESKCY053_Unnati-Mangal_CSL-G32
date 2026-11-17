@@ -1,0 +1,50 @@
+==============================================================================================
+ ARP Spoofing Detector v1.0  |  Mini Project CSL-032  |  Unnati Mangal (23ESKCY053)
+==============================================================================================
+ Source  : pcap file samples/s6_blackhole_forged_headers.pcap
+ Rules   : flood >= 5 gratuitous ARPs in 10 s | TTL 300 s | multi-IP >= 3 | cooldown 30 s
+ Trusted : none (bindings are learnt from the traffic)
+----------------------------------------------------------------------------------------------
+[+000.000s] new host   192.168.56.1    is at 02:aa:00:00:00:01
+[+004.900s] new host   192.168.56.30   is at 02:aa:00:00:00:30
+[+007.500s] new host   192.168.56.20   is at 02:aa:00:00:00:20
+[+012.100s] new host   192.168.56.10   is at 02:aa:00:00:00:10
+[+016.000s] ALERT #1   HIGH     R1  IP-MAC CONFLICT  (frame 15)
+            192.168.56.20 moved from 02:aa:00:00:00:20 to 02:de:ad:00:00:00
+[+016.000s] ALERT #2   MEDIUM   R6  INCONSISTENT HEADERS  (frame 15)
+            frame sent by 02:bb:00:00:00:66 but its ARP sender field says 02:de:ad:00:00:00
+            (claims 192.168.56.20)
+[+016.000s] ALERT #3   LOW      R7  UNSOLICITED REPLY  (frame 15)
+            unrequested reply '192.168.56.20 is at 02:de:ad:00:00:00' sent to 192.168.56.30
+[+024.600s] ALERT #4   CRITICAL R2  BINDING FLIP-FLOP  (frame 19)
+            192.168.56.20 flips between 02:de:ad:00:00:00 and 02:aa:00:00:00:20 (2 changes)
+[+033.900s] new host   192.168.56.11   is at 02:aa:00:00:00:11
+----------------------------------------------------------------------------------------------
+SUMMARY
+  Frames read    : 24 (24 of them ARP)
+  ARP packets    : 24 = 12 requests + 12 replies (3 gratuitous, 3 probes)
+  Hosts in table : 5
+  Alerts         : 4 shown (CRITICAL 1, HIGH 1, MEDIUM 1, LOW 1), 12 repeats suppressed
+
+IP-MAC TABLE
+  +---------------+-------------------+---------+---------+---------------------+
+  | IP address    | MAC address       | Packets | Changes | Remark              |
+  +---------------+-------------------+---------+---------+---------------------+
+  | 192.168.56.1  | 02:aa:00:00:00:01 | 2       | 0       |                     |
+  | 192.168.56.10 | 02:aa:00:00:00:10 | 2       | 0       |                     |
+  | 192.168.56.11 | 02:aa:00:00:00:11 | 1       | 0       |                     |
+  | 192.168.56.20 | 02:aa:00:00:00:20 | 12      | 4       | CHANGED 4x - verify |
+  | 192.168.56.30 | 02:aa:00:00:00:30 | 4       | 0       |                     |
+  +---------------+-------------------+---------+---------+---------------------+
+
+ALERTS BY RULE
+  +------+----------------------+----------+-------+------------+
+  | Rule | Name                 | Severity | Shown | Suppressed |
+  +------+----------------------+----------+-------+------------+
+  | R1   | IP-MAC CONFLICT      | HIGH     | 1     | 0          |
+  | R2   | BINDING FLIP-FLOP    | CRITICAL | 1     | 2          |
+  | R6   | INCONSISTENT HEADERS | MEDIUM   | 1     | 5          |
+  | R7   | UNSOLICITED REPLY    | LOW      | 1     | 5          |
+  +------+----------------------+----------+-------+------------+
+
+RESULT: suspicious ARP activity detected (highest severity: CRITICAL)

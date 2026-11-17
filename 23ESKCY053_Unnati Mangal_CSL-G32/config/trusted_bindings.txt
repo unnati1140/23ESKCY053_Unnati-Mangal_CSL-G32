@@ -1,0 +1,11 @@
+# Trusted IP-MAC bindings for the lab LAN (rule R3).
+#
+# Hosts listed here can never be "moved" to another MAC address: any ARP
+# packet that claims one of these IPs with a different MAC raises a
+# CRITICAL alert immediately and is not learnt.
+#
+# Format:  IP-address   MAC-address   # comment
+# For a real network, put the default gateway here (see `arp -a`).
+
+192.168.56.1    02:aa:00:00:00:01    # GATEWAY
+192.168.56.20   02:aa:00:00:00:20    # SERVER

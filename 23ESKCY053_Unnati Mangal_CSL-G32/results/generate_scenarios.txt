@@ -1,0 +1,9 @@
+Writing lab captures to samples/ (files only - nothing is sent)
+  s1_normal.pcap                      51 frames ( 45 ARP,  0 forged)  benign
+  s2_mitm_poisoning.pcap              60 frames ( 56 ARP, 30 forged)  attack
+  s3_garp_flood.pcap                  67 frames ( 67 ARP, 50 forged)  attack
+  s4_dhcp_reassignment.pcap           29 frames ( 29 ARP,  0 forged)  benign
+  s5_router_replaced.pcap             21 frames ( 21 ARP,  0 forged)  benign
+  s6_blackhole_forged_headers.pcap    24 frames ( 24 ARP,  6 forged)  attack
+  s7_poisoned_before_start.pcap       42 frames ( 40 ARP, 30 forged)  attack
+Ground truth written to samples/scenarios.json (8 runs)

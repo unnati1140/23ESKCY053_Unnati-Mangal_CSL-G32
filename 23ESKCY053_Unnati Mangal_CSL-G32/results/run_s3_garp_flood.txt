@@ -1,0 +1,48 @@
+==============================================================================================
+ ARP Spoofing Detector v1.0  |  Mini Project CSL-032  |  Unnati Mangal (23ESKCY053)
+==============================================================================================
+ Source  : pcap file samples/s3_garp_flood.pcap
+ Rules   : flood >= 5 gratuitous ARPs in 10 s | TTL 300 s | multi-IP >= 3 | cooldown 30 s
+ Trusted : none (bindings are learnt from the traffic)
+----------------------------------------------------------------------------------------------
+[+000.000s] new host   192.168.56.1    is at 02:aa:00:00:00:01
+[+002.100s] new host   192.168.56.10   is at 02:aa:00:00:00:10
+[+004.450s] new host   192.168.56.11   is at 02:aa:00:00:00:11
+[+006.800s] new host   192.168.56.20   is at 02:aa:00:00:00:20
+[+009.150s] new host   192.168.56.30   is at 02:aa:00:00:00:30
+[+011.600s] new host   192.168.56.100  is at 02:aa:00:00:01:00
+[+016.000s] ALERT #1   HIGH     R1  IP-MAC CONFLICT  (frame 14)
+            192.168.56.1 moved from 02:aa:00:00:00:01 to 02:bb:00:00:00:66
+[+016.400s] ALERT #2   HIGH     R4  GRATUITOUS ARP FLOOD  (frame 18)
+            02:bb:00:00:00:66 sent 5 gratuitous ARPs for 192.168.56.1 within 10 s (limit 5)
+[+018.247s] ALERT #3   CRITICAL R2  BINDING FLIP-FLOP  (frame 38)
+            192.168.56.1 flips between 02:bb:00:00:00:66 and 02:aa:00:00:00:01 (2 changes)
+----------------------------------------------------------------------------------------------
+SUMMARY
+  Frames read    : 67 (67 of them ARP)
+  ARP packets    : 67 = 9 requests + 58 replies (51 gratuitous, 0 probes)
+  Hosts in table : 6
+  Alerts         : 3 shown (CRITICAL 1, HIGH 2), 47 repeats suppressed
+
+IP-MAC TABLE
+  +----------------+-------------------+---------+---------+---------------------+
+  | IP address     | MAC address       | Packets | Changes | Remark              |
+  +----------------+-------------------+---------+---------+---------------------+
+  | 192.168.56.1   | 02:aa:00:00:00:01 | 57      | 4       | CHANGED 4x - verify |
+  | 192.168.56.10  | 02:aa:00:00:00:10 | 3       | 0       |                     |
+  | 192.168.56.11  | 02:aa:00:00:00:11 | 2       | 0       |                     |
+  | 192.168.56.20  | 02:aa:00:00:00:20 | 3       | 0       |                     |
+  | 192.168.56.30  | 02:aa:00:00:00:30 | 1       | 0       |                     |
+  | 192.168.56.100 | 02:aa:00:00:01:00 | 1       | 0       |                     |
+  +----------------+-------------------+---------+---------+---------------------+
+
+ALERTS BY RULE
+  +------+----------------------+----------+-------+------------+
+  | Rule | Name                 | Severity | Shown | Suppressed |
+  +------+----------------------+----------+-------+------------+
+  | R1   | IP-MAC CONFLICT      | HIGH     | 1     | 0          |
+  | R2   | BINDING FLIP-FLOP    | CRITICAL | 1     | 2          |
+  | R4   | GRATUITOUS ARP FLOOD | HIGH     | 1     | 45         |
+  +------+----------------------+----------+-------+------------+
+
+RESULT: suspicious ARP activity detected (highest severity: CRITICAL)

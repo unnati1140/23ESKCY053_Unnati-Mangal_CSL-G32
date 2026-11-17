@@ -1,0 +1,28 @@
+==============================================================================================
+ ARP Spoofing Detector v1.0  |  Mini Project CSL-032  |  Unnati Mangal (23ESKCY053)
+==============================================================================================
+ Source  : pcap file samples/s4_dhcp_reassignment.pcap
+ Rules   : flood >= 5 gratuitous ARPs in 10 s | TTL 300 s | multi-IP >= 3 | cooldown 30 s
+ Trusted : none (bindings are learnt from the traffic)
+----------------------------------------------------------------------------------------------
+[+000.000s] new host   192.168.56.1    is at 02:aa:00:00:00:01
+[+005.000s] new host   192.168.56.11   is at 02:aa:00:00:00:11
+[+009.600s] new host   192.168.56.10   is at 02:aa:00:00:00:10
+[+424.000s] re-learnt  192.168.56.11   is at 02:aa:00:00:00:40 (old 02:aa:00:00:00:11 expired)
+----------------------------------------------------------------------------------------------
+SUMMARY
+  Frames read    : 29 (29 of them ARP)
+  ARP packets    : 29 = 20 requests + 9 replies (5 gratuitous, 6 probes)
+  Hosts in table : 3
+  Alerts         : 0
+
+IP-MAC TABLE
+  +---------------+-------------------+---------+---------+--------+
+  | IP address    | MAC address       | Packets | Changes | Remark |
+  +---------------+-------------------+---------+---------+--------+
+  | 192.168.56.1  | 02:aa:00:00:00:01 | 10      | 0       |        |
+  | 192.168.56.10 | 02:aa:00:00:00:10 | 7       | 0       |        |
+  | 192.168.56.11 | 02:aa:00:00:00:40 | 6       | 0       |        |
+  +---------------+-------------------+---------+---------+--------+
+
+RESULT: no suspicious ARP activity detected

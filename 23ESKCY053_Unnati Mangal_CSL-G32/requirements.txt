@@ -1,0 +1,5 @@
+# ARP Spoofing Detector - Python packages
+#   pip install -r requirements.txt
+scapy>=2.6.1
+# only needed for the graphs (tools/plot_results.py)
+matplotlib>=3.5

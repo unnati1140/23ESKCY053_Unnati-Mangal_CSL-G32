@@ -1,0 +1,9 @@
+run,capture,trusted_file,kind,frames,arp_frames,forged_frames,expected_rules,fired_rules,alerts_shown,serious_alerts,repeats_suppressed,delay_s,forged_frames_before_alarm,check
+S1,s1_normal.pcap,,benign,51,45,0,,,0,0,0,,,PASS
+S2,s2_mitm_poisoning.pcap,,attack,60,56,30,R1 R2 R5 R7,R1 R2 R5 R7,7,4,60,0.000,0,PASS
+S3,s3_garp_flood.pcap,,attack,67,67,50,R1 R2 R4,R1 R2 R4,3,3,47,0.000,0,PASS
+S4,s4_dhcp_reassignment.pcap,,benign,29,29,0,,,0,0,0,,,PASS
+S5,s5_router_replaced.pcap,,benign,21,21,0,R1,R1,1,1,0,,,PASS
+S6,s6_blackhole_forged_headers.pcap,,attack,24,24,6,R1 R2 R6 R7,R1 R2 R6 R7,4,2,12,0.000,0,PASS
+S7,s7_poisoned_before_start.pcap,,attack,42,40,30,R1 R2 R7,R1 R2 R7,6,4,28,5.200,6,PASS
+S7+T,s7_poisoned_before_start.pcap,config/trusted_bindings.txt,attack,42,40,30,R1 R2 R3 R7,R1 R2 R3 R7,5,3,42,0.000,0,PASS

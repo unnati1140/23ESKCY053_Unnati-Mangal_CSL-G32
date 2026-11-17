@@ -1,0 +1,49 @@
+TestArpEvent.test_gratuitous_means_sender_ip_equals_target_ip ... ok
+TestArpEvent.test_mac_is_normalised ... ok
+TestArpEvent.test_probe_is_not_gratuitous ... ok
+TestArpEvent.test_request_and_reply_flags ... ok
+TestArpTable.test_expired_binding_is_relearned ... ok
+TestArpTable.test_history_remembers_previous_owner ... ok
+TestArpTable.test_new_same_changed ... ok
+TestArpTable.test_reverse_index_and_numeric_order ... ok
+TestArpTable.test_ttl_zero_never_expires ... ok
+TestCooldown.test_alert_returns_after_cooldown ... ok
+TestCooldown.test_repeats_are_counted_not_shown ... ok
+TestLabScenarios.test_s1_normal_traffic_is_silent ... ok
+TestLabScenarios.test_s2_mitm_poisoning ... ok
+TestLabScenarios.test_s3_gratuitous_flood ... ok
+TestLabScenarios.test_s4_dhcp_reassignment_is_silent ... ok
+TestLabScenarios.test_s5_router_replaced_gives_one_conflict ... ok
+TestLabScenarios.test_s6_blackhole_forged_headers ... ok
+TestLabScenarios.test_s7_poisoned_before_start ... ok
+TestLabScenarios.test_s7_with_trusted_table ... ok
+TestR1Conflict.test_change_after_ttl_is_not_an_alert ... ok
+TestR1Conflict.test_known_ip_at_new_mac_raises_high_alert ... ok
+TestR1Conflict.test_learning_and_confirming_is_silent ... ok
+TestR1Conflict.test_probe_is_not_learnt ... ok
+TestR2FlipFlop.test_return_after_window_is_a_plain_conflict ... ok
+TestR2FlipFlop.test_return_to_previous_mac_is_critical ... ok
+TestR3Trusted.test_correct_mac_for_trusted_ip_is_accepted ... ok
+TestR3Trusted.test_forged_claim_is_not_learnt ... ok
+TestR3Trusted.test_wrong_mac_for_trusted_ip_is_critical_at_once ... ok
+TestR4GratuitousFlood.test_fifth_gratuitous_arp_raises_flood ... ok
+TestR4GratuitousFlood.test_flood_is_counted_per_sender ... ok
+TestR4GratuitousFlood.test_four_gratuitous_arps_are_tolerated ... ok
+TestR4GratuitousFlood.test_slow_announcements_are_not_a_flood ... ok
+TestR5ManyIps.test_third_ip_for_one_mac_raises_alert ... ok
+TestR6Headers.test_broadcast_sender_mac_is_invalid ... ok
+TestR6Headers.test_ethernet_source_differs_from_arp_sender ... ok
+TestR7Unsolicited.test_late_reply_is_flagged ... ok
+TestR7Unsolicited.test_reply_to_a_request_is_fine ... ok
+TestR7Unsolicited.test_reply_without_request_is_flagged ... ok
+TestR7Unsolicited.test_second_reply_to_one_request_is_flagged ... ok
+TestScapyConversion.test_arp_packet_becomes_event ... ok
+TestScapyConversion.test_non_arp_packet_is_ignored ... ok
+TestTrustedFile.test_bad_ip_is_rejected ... ok
+TestTrustedFile.test_bad_mac_is_rejected ... ok
+TestTrustedFile.test_file_is_parsed ... ok
+
+----------------------------------------------------------------------
+Ran 44 tests in 0.062s
+
+OK
